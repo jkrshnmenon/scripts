@@ -21,7 +21,6 @@ for x in call_sites:
 	if puts.addr == target:
 		avoids.append(x)
 pg = p.factory.path_group(s)
-print "Starting exploration"
 pg.explore(find=0x404fc1,avoid = avoids)
 for p in pg.found:
 	print p.state.posix.dumps(1)
