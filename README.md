@@ -1,2 +1,2 @@
 # scripts
-A set of scripts developed during and for CTF's.
+A set of scripts and files that I commonly use
