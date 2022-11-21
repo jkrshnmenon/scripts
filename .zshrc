@@ -1,4 +1,3 @@
-source ~/git_stuff/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -61,7 +60,7 @@ ZSH_THEME="gozilla"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="dd.mm.yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -71,7 +70,13 @@ ZSH_THEME="gozilla"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker docker-compose)
+plugins=(
+	git
+       	docker 
+	zsh-autocomplete
+	zsh-autosuggestions 
+	zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,10 +106,13 @@ source $ZSH/oh-my-zsh.sh
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias reload="source ~/.zshrc"
+alias aslr="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
 
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+source $HOME/.local/bin/virtualenvwrapper.sh
 source $HOME/.cargo/env
+
+export PATH=$PATH:$HOME/.local/bin
 
 eval $(thefuck --alias)
 eval $(thefuck --alias FUCK)
