@@ -213,6 +213,7 @@ class Assembler:
                 return
 
         cur_offset: int = self.insns[cur_idx-1].offset + len(self.insns[cur_idx-1].bytecode)
+        # TODO: Remove hardcoded value
         target_offset: int = -1 * ((cur_offset + 8 + 1) - self.insns[target_idx].offset)
 
         target_offset &= (2**64 - 1)
@@ -252,7 +253,27 @@ class Assembler:
 
         return flag
 
+    def first_pass(self) -> None:
+        idx: int
+        ins: Instruction
+        for idx, ins in enumerate(self.insns):
+            if ins.is_jmp:
+                continue
+            self.compile_insn(ins, idx)
+
     def assemble(self, debug: bool = False) -> bytes:
+        """
+        Logic
+        1. Loop through every instruction and assemble it if possible
+        2. Use a flag to determine if any instruction has not been assembled
+        3. Loop until flag is false
+        4. For jumps, use a dictionary to map labels to indices
+        5. Replace labels with index and assemble jumps (hopefully this resolves the size issue)
+        6. Once all instructions have been assembled, iterate one more time to fix jump offsets
+        """
+
+        self.first_pass()
+
         asm_finished: bool = False
 
         while asm_finished is False:
