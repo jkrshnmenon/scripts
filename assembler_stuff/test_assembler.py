@@ -57,6 +57,25 @@ def do_unpack_insn(mnemonic) -> tuple[int, list[int]]:
     # Return the opcode value (int) and a list of operand sizes (in bits) for this mnemonic
     return INS_MAP[mnemonic], list(map(lambda x: x*8, ARG_MAP[mnemonic]))
 
+@Instruction.ins_is_jump
+def do_ins_is_jump(mnemonic) -> bool:
+    # This function is supposed to return true if the mnemonic corresponds to a jump instruction
+    # False otherwise
+   return insn in ['jmp',
+                   'jeq',
+                   'jne',
+                   'jz',
+                   'jnz',
+                   'jl',
+                   'jle',
+                   'jg',
+                   'jge',
+                   'jb',
+                   'jbe',
+                   'ja',
+                   'jae',
+                   ]
+
 @Instruction.compile_insn
 def do_compile_insn(opc_int, operand_bytes) -> bytes:
     # Pack the instruction with opcode opc_int and the operands (which have already een assembled into operand_bytes)

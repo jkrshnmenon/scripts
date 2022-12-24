@@ -21,7 +21,7 @@ UNOP_REGEX = r'([a-z]+)\sr([0-9]*);'
 JMP_REGEX = r'([a-z]+)\s([a-z0-9]+);'
 
 # This regex matches the form "<mnemonic> <register>, <register>"
-BINOP_REGEX = r'([a-z]+)\sr([0-9]*),\s([0-9]*);'
+BINOP_REGEX = r'([a-z]+)\sr([0-9]*),\s(0x[0-9a-fA-F]+|[0-9]+);'
 
 # This regex matches the form ".<label>:"
 # Labels can only contain alphabets
@@ -147,7 +147,7 @@ class Instruction(object):
     @staticmethod
     def basic_packer(insn_int: int, operand_bytecode: bytes) -> bytes:
         insn_bytecode: bytes = b""
-        insn_bytecode += p8(insn_int)
+        insn_bytecode += pwn.p8(insn_int)
         return insn_bytecode + operand_bytecode
 
     _packer = basic_packer
@@ -281,8 +281,7 @@ class Assembler:
         # Therefore, include the size of the current instruction along with its offset
         cur_offset: int = ins.offset + len(ins.bytecode)
 
-        # I don't really know why the +1 is here, but it seems to work
-        target_offset: int = -1 * ((cur_offset + 1) - self.insns[target_idx].offset)
+        target_offset: int = -1 * (cur_offset - self.insns[target_idx].offset)
 
         target_offset &= BITMASK
 
@@ -352,7 +351,7 @@ class Assembler:
             # This will be fixed at a later point when we actually assemble jumps
             ins._operand_strs[0] = new_idx
             ins.update_operands([ins._operands[0]._bits])
-            return
+
         elif ins.is_jmp:
             # Not the first pass
             # Which means that we need to fix the offsets of these jump instructions
