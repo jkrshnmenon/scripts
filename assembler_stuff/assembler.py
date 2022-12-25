@@ -13,18 +13,23 @@ BITMASK = (2**64 - 1)
 NOP_REGEX = r'([a-z]+);'
 
 # This regex matches the form "<mnemonic> <register>;"
+# or the form "<mnemonic> <immediate>"
+# Immediate value can be decimal or hex (prepended with 0x)
 # Registers can be labelled as 'r<number>'
-UNOP_REGEX = r'([a-z]+)\sr([0-9]*);'
+UNOP_REGEX = r'([a-z]+)\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+);'
 
 # This regex matches the form "<mnemonic> <label>;"
+# You cannot use absolute addresses
 # This is ideally only used for jumps
 JMP_REGEX = r'([a-z]+)\s([a-z0-9]+);'
 
 # This regex matches the form "<mnemonic> <register>, <register>"
-BINOP_REGEX = r'([a-z]+)\sr([0-9]*),\s(0x[0-9a-fA-F]+|[0-9]+);'
+# or the form "<mnemonic> <immediate>, <immediate>"
+# Or any permutation of registers and immediate values
+BINOP_REGEX = r'([a-z]+)\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+),\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+);'
 
 # This regex matches the form ".<label>:"
-# Labels can only contain alphabets
+# Label can contain either alphabets or numbers
 LABEL_REGEX = r'.([a-z0-9]+):'
 
 INSN_REGEX = [NOP_REGEX, UNOP_REGEX, JMP_REGEX, BINOP_REGEX]
@@ -59,8 +64,13 @@ class Operand(object):
         operand_integer: int = 0
 
         if self._operand.startswith("0x"):
+            # Hexadecimal value
             operand_integer = int(self._operand, 16)
+        elif self._operand.startswith("r"):
+            # Register
+            operand_integer = int(self._operand[1:])
         else:
+            # Decimal
             operand_integer = int(self._operand)
 
         self._bytecode = Operand._packer(operand_integer, self._bits)
