@@ -13,6 +13,9 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'preservim/nerdtree'
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'jayli/vim-easycomplete'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
