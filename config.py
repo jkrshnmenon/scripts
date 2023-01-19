@@ -51,7 +51,7 @@ def configure(repl):
     
     
     # Show line numbers (when the input contains multiple lines.)
-    repl.show_line_numbers = False
+    repl.show_line_numbers = True
     
     
     # Show status bar.
