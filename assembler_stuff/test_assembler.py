@@ -61,7 +61,7 @@ def do_unpack_insn(mnemonic) -> tuple[int, list[int]]:
 def do_ins_is_jump(mnemonic) -> bool:
     # This function is supposed to return true if the mnemonic corresponds to a jump instruction
     # False otherwise
-   return insn in ['jmp',
+   return mnemonic in ['jmp',
                    'jeq',
                    'jne',
                    'jz',
