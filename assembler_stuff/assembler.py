@@ -28,11 +28,16 @@ JMP_REGEX = r'([a-z]+)\s([a-z0-9]+);'
 # Or any permutation of registers and immediate values
 BINOP_REGEX = r'([a-z]+)\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+),\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+);'
 
+# This regex matches the form "<mnemonic> <register>, <register>, <register>"
+# or the form "<mnemonic> <immediate>, <immediate>, <immediate>"
+# Or any permutation of registers and immediate values
+TERNOP_REGEX = r'([a-z]+)\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+),\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+),\s(r[0-9]*|0x[0-9a-fA-F]+|[0-9]+);'
+
 # This regex matches the form ".<label>:"
 # Label can contain either alphabets or numbers
 LABEL_REGEX = r'.([a-z0-9]+):'
 
-INSN_REGEX = [NOP_REGEX, UNOP_REGEX, JMP_REGEX, BINOP_REGEX]
+INSN_REGEX = [NOP_REGEX, UNOP_REGEX, JMP_REGEX, BINOP_REGEX, TERNOP_REGEX]
 
 
 
