@@ -8,6 +8,7 @@
 
 import pandas
 import gspread
+from typing import Callable
 from string import ascii_uppercase
 
 
@@ -196,3 +197,34 @@ class Client():
             worksheet.format(ranges=range_str, format={"textFormat": {"bold": True}})
         else:
             raise Exception("Either of row, column or range should be provided")
+    
+    def update(self, worksheet: gspread.Worksheet, update_func: Callable[[list], list], row: int=None, col: int=None, range_str: str=None):
+        """_summary_
+
+        Args:
+            worksheet (gspread.Worksheet): The worksheet to use
+            update_func (Callable[[list], list]): A function that returns the row with the updated value
+            row (int, optional): The row index to use. Defaults to None.
+            col (int, optional): The column index to use. Defaults to None.
+            range_str (str, optional): A range to use. Defaults to None.
+
+        Raises:
+            Exception: At least one option out of row, col or range_str should be provided
+        """
+        if row is not None:
+            range_str = self.format_range(row_start=row, row_len=0, col_start=0, col_len=worksheet.col_count)
+        elif col is not None:
+            range_str = self.format_range(row_start=0, row_len=worksheet.row_count, col_start=col, col_len=0)
+        elif range_str is not None:
+            pass
+        else:
+            raise Exception("Either of row, column or range should be provided")
+
+        rows: list[list] = worksheet.get_values(range_str)
+        updated_rows: list[list] = []
+        x:list
+        for x in rows:
+            updated_rows.append(update_func(x))
+        
+        worksheet.update(range_name=range_str, values=updated_rows)
+
