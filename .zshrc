@@ -52,7 +52,7 @@ ZSH_THEME="gozilla"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -107,12 +107,25 @@ alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias reload="source ~/.zshrc"
 alias aslr="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
+alias fuzz="sudo su -c 'echo core >/proc/sys/kernel/core_pattern && cd /sys/devices/system/cpu && echo performance | tee cpu*/cpufreq/scaling_governor'"
+alias flex="pushd ~/Downloads/ida8/flexlm 1>/dev/null 2>/dev/null && ./run.sh && popd 1>/dev/null 2>/dev/null"
+alias doup="docker compose up "
+alias dodown="docker compose down "
+alias honeynut="sudo openvpn --config $HOME/Documents/arbiter.conf &"
 
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export BAT_THEME="Monokai Extended Bright"
 source $HOME/.local/bin/virtualenvwrapper.sh
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+
 source $HOME/.cargo/env
 
-export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.rbenv/bin
 
 eval $(thefuck --alias)
 eval $(thefuck --alias FUCK)
+setopt rmstarsilent
+export OPENAI_API_KEY="BAZINGA!"
+export GOROOT=$HOME/Downloads/go
+export PATH=$GOROOT/bin:$PATH
