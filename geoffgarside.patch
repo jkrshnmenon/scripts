@@ -1,0 +1,13 @@
+diff --git a/themes/geoffgarside.zsh-theme b/themes/geoffgarside.zsh-theme
+index 675ec72..2dc7e96 100644
+--- a/themes/geoffgarside.zsh-theme
++++ b/themes/geoffgarside.zsh-theme
+@@ -1,5 +1,4 @@
+ # PROMPT="[%*] %n:%c $(git_prompt_info)%(!.#.$) "
+-PROMPT='[%*] %{$fg[cyan]%}%n%{$reset_color%}:%{$fg[green]%}%c%{$reset_color%}$(git_prompt_info) %(!.#.$) '
+-
+-ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[yellow]%}git:("
+-ZSH_THEME_GIT_PROMPT_SUFFIX=")%{$reset_color%}"
++PROMPT='%{$fg[yellow]%}[%*] %{$fg_bold[blue]%}(%n@%m)%{$reset_color%} %{$fg[cyan]%}%{$terminfo[bold]%}%c%{$terminfo[sgr0]%} %{$fg[red]%}➜%{$reset_color%} '
++ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}"
++ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"

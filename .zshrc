@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="gozilla"
+ZSH_THEME="geoffgarside"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -129,3 +129,16 @@ setopt rmstarsilent
 export OPENAI_API_KEY="BAZINGA!"
 export GOROOT=$HOME/Downloads/go
 export PATH=$GOROOT/bin:$PATH
+
+pd_logs () {
+	ID=$1
+	pd cat $ID $(pd ls $ID)
+}
+
+alias pdlogs="pd_logs "
+alias flex="cd /home/jay/Downloads/ida8.3/flexlm && ./run.sh && cd -"
+alias doup="docker compose up "
+alias dodown="docker compose down "
+alias doprune="docker network prune -f"
+alias honeynet="sudo openvpn /home/jay/Documents/honeynet/arbiter.conf &"
+alias zotero="/home/jay/Downloads/Zotero_linux-x86_64/zotero"

@@ -8,7 +8,10 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'romainl/Apprentice'
+"Plugin 'romainl/Apprentice'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'morhetz/gruvbox'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'xuhdev/vim-latex-live-preview'
@@ -33,7 +36,7 @@ filetype plugin indent on
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-colorscheme apprentice
+" colorscheme apprentice
 filetype plugin indent on
 nnoremap <C-y> "+y
 vnoremap <C-y> "+y
@@ -70,3 +73,8 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 
 set encoding=utf-8
+let g:airline_theme='supernova'
+autocmd vimenter * ++nested colorscheme gruvbox
+set background=dark
+let g:airline_symbols_ascii = 1
+let g:airline_detect_modified=1
