@@ -78,3 +78,5 @@ autocmd vimenter * ++nested colorscheme gruvbox
 set background=dark
 let g:airline_symbols_ascii = 1
 let g:airline_detect_modified=1
+"vnoremap Y "+y :call system('wl-copy', @+)<CR>
+vnoremap Y "+y :call system('xclip -selection clipboard', @+)<CR>

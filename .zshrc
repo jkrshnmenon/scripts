@@ -93,6 +93,7 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -127,7 +128,7 @@ eval $(thefuck --alias)
 eval $(thefuck --alias FUCK)
 setopt rmstarsilent
 export OPENAI_API_KEY="BAZINGA!"
-export GOROOT=$HOME/Downloads/go
+export GOROOT=$HOME/.local/go
 export PATH=$GOROOT/bin:$PATH
 
 pd_logs () {
@@ -136,9 +137,19 @@ pd_logs () {
 }
 
 alias pdlogs="pd_logs "
-alias flex="cd /home/jay/Downloads/ida8.3/flexlm && ./run.sh && cd -"
 alias doup="docker compose up "
 alias dodown="docker compose down "
 alias doprune="docker network prune -f"
-alias honeynet="sudo openvpn /home/jay/Documents/honeynet/arbiter.conf &"
 alias zotero="/home/jay/Downloads/Zotero_linux-x86_64/zotero"
+alias pwncollege="scp -r dojo:/challenge/ . && mv challenge/* . && rmdir challenge"
+
+# Added by `rbenv init` on Thu Jul 18 11:34:05 AM MST 2024
+eval "$(rbenv init - --no-rehash zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# For regolith issues
+wallpaper.sh
+
