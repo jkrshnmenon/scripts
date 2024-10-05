@@ -156,3 +156,5 @@ alias vpn_stop="/opt/cisco/secureclient/bin/vpn disconnect"
 zstyle ':autocomplete:*' insert-separator false
 # Enter from history search submits command
 bindkey -M menuselect '^M' .accept-line
+# Don't auto expand ~ to home folder
+zstyle ':completion:*' expand 'false'
