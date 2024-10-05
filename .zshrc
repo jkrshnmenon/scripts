@@ -109,12 +109,12 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias reload="source ~/.zshrc"
 alias aslr="echo 0 | sudo tee /proc/sys/kernel/randomize_va_space"
 alias fuzz="sudo su -c 'echo core >/proc/sys/kernel/core_pattern && cd /sys/devices/system/cpu && echo performance | tee cpu*/cpufreq/scaling_governor'"
-alias flex="pushd ~/Downloads/ida8/flexlm 1>/dev/null 2>/dev/null && ./run.sh && popd 1>/dev/null 2>/dev/null"
+alias flex="pushd ~/Downloads/ida8.4/flexlm 1>/dev/null 2>/dev/null && ./run.sh && popd 1>/dev/null 2>/dev/null"
 alias doup="docker compose up "
 alias dodown="docker compose down "
 alias honeynut="sudo openvpn --config $HOME/Documents/arbiter.conf &"
 
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export BAT_THEME="Monokai Extended Bright"
 source $HOME/.local/bin/virtualenvwrapper.sh
 export WORKON_HOME=$HOME/.virtualenvs
@@ -149,7 +149,10 @@ eval "$(rbenv init - --no-rehash zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias vpn_start="connect_vpn"
+alias vpn_stop="/opt/cisco/secureclient/bin/vpn disconnect"
 
-# For regolith issues
-wallpaper.sh
-
+# Disable semi-colon in zsh history search
+zstyle ':autocomplete:*' insert-separator false
+# Enter from history search submits command
+bindkey -M menuselect '^M' .accept-line
