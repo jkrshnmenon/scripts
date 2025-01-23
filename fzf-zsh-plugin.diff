@@ -1,0 +1,125 @@
+diff --git a/bin/apt-fzf-search b/bin/apt-fzf-search
+index 612532f..70f2990 100755
+--- a/bin/apt-fzf-search
++++ b/bin/apt-fzf-search
+@@ -26,7 +26,7 @@ function has() {
+ }
+ 
+ if has apt-cache; then
+-  apt-cache search "$@" | \
++  apt-cache search "${*:-}" | \
+   sort | \
+   cut --delimiter ' ' --fields 1 | \
+   fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | \
+diff --git a/bin/d-logs b/bin/d-logs
+new file mode 100755
+index 0000000..25a03f1
+--- /dev/null
++++ b/bin/d-logs
+@@ -0,0 +1,39 @@
++#!/usr/bin/env bash
++#
++# Select a docker container to start and attach to
++#
++# From fzf wiki: https://github.com/junegunn/fzf/wiki/examples
++
++set -o pipefail
++if [[ -n "$DEBUG" ]]; then
++  set -x
++fi
++
++function debug() {
++  if [[ -n "$DEBUG" ]]; then
++    echo "$@"
++  fi
++}
++
++function fail() {
++  printf '%s\n' "$1" >&2 ## Send message to stderr. Exclude >&2 if you don't want it that way.
++  exit "${2-1}"          ## Return a code specified by $2 or 1 by default.
++}
++
++function has() {
++  # Check if a command is in $PATH
++  which "$@" > /dev/null 2>&1
++}
++
++function da() {
++  local cid
++  cid=$(docker ps -a | sed 1d | fzf -1 -q "$1" | awk '{print $1}')
++
++  [ -n "$cid" ] && docker logs -f "$cid"
++}
++
++if has docker; then
++  da "$@"
++else
++  "Cannot find docker in $PATH"
++fi
+diff --git a/bin/fif b/bin/fif
+index 7c5142d..18892f1 100755
+--- a/bin/fif
++++ b/bin/fif
+@@ -16,7 +16,8 @@ fif() {
+   fi
+   # if FZF_PREVIEW_WINDOW is undefined, quoting it breaks the script
+   # shellcheck disable=SC2086
+-  rg --files-with-matches --no-messages "$1" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
++  # rg --files-with-matches --no-messages "$1" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
++  rg --no-messages "$1" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
+ }
+ 
+ [[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'
+diff --git a/bin/fzf-grep-edit b/bin/fzf-grep-edit
+index 0672454..94e5b6e 100755
+--- a/bin/fzf-grep-edit
++++ b/bin/fzf-grep-edit
+@@ -22,12 +22,12 @@ fi
+ 
+ if has bat; then
+   fzf-grep-edit(){
+-    if [[ $# == 0 ]]; then
+-      echo 'Error: search term was not provided.'
+-      return
+-    fi
++    # if [[ $# == 0 ]]; then
++    #   echo 'Error: search term was not provided.'
++    #   return
++    # fi
+     match=$(
+-      rg --color=never --line-number "$1" |
++      rg --color=never --line-number "${*:-}" |
+         fzf --no-multi --delimiter : \
+           --preview "bat --color=always --line-range {2}: {1}"
+       )
+@@ -39,12 +39,12 @@ if has bat; then
+   }
+ else
+   fzf-grep-edit(){
+-    if [[ $# == 0 ]]; then
+-      echo 'Error: search term was not provided.'
+-      return
+-    fi
++    # if [[ $# == 0 ]]; then
++    #   echo 'Error: search term was not provided.'
++    #   return
++    # fi
+     match=$(
+-      rg --color=never --line-number "$1" |
++      rg --color=never --line-number "${*:-}" |
+         fzf --no-multi --delimiter : \
+           --preview "head -100 {2}: {1}"
+       )
+diff --git a/bin/fzf-vscode b/bin/fzf-vscode
+index 24b8935..3a558f4 100755
+--- a/bin/fzf-vscode
++++ b/bin/fzf-vscode
+@@ -11,7 +11,7 @@
+ # 2. Interactively narrow down the list using fzf
+ # 3. Open the file in vscode
+ 
+-set -euo pipefail
++set -eo pipefail
+ if [[ -n "$DEBUG" ]]; then
+   set -x
+ fi

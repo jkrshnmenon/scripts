@@ -137,7 +137,10 @@ pd_logs () {
 	pd cat $ID $(pd ls $ID)
 }
 
+# Pydatatask
 alias pdlogs="pd_logs "
+
+# Docker
 alias doup="docker compose up "
 alias dodown="docker compose down "
 alias doprune="docker network prune -f"
@@ -145,10 +148,18 @@ alias dattach="d-attach"
 alias dstop="d-stop-container"
 alias drm="d-rm"
 alias drmi="d-image-rm"
-alias fkill="fzf-kill"
+alias dlogs="d-logs"
+
+# File search
 alias frg="fzf-grep-edit "
 alias fvim="fzf-find-edit"
+
+# Kubernetes
 alias fpods="fzf-browse-pods"
+
+# Misc
+alias fkill="fzf-kill"
+
 alias zotero="/home/jay/Downloads/Zotero_linux-x86_64/zotero"
 alias pwncollege="scp -r dojo:/challenge/ . && mv challenge/* . && rmdir challenge"
 
