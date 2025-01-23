@@ -76,6 +76,7 @@ plugins=(
 	zsh-autocomplete
 	zsh-autosuggestions 
 	zsh-syntax-highlighting
+	fzf-zsh-plugin
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -140,6 +141,14 @@ alias pdlogs="pd_logs "
 alias doup="docker compose up "
 alias dodown="docker compose down "
 alias doprune="docker network prune -f"
+alias dattach="d-attach"
+alias dstop="d-stop-container"
+alias drm="d-rm"
+alias drmi="d-image-rm"
+alias fkill="fzf-kill"
+alias frg="fzf-grep-edit "
+alias fvim="fzf-find-edit"
+alias fpods="fzf-browse-pods"
 alias zotero="/home/jay/Downloads/Zotero_linux-x86_64/zotero"
 alias pwncollege="scp -r dojo:/challenge/ . && mv challenge/* . && rmdir challenge"
 
@@ -155,6 +164,7 @@ alias vpn_stop="/opt/cisco/secureclient/bin/vpn disconnect"
 # Disable semi-colon in zsh history search
 zstyle ':autocomplete:*' insert-separator false
 # Enter from history search submits command
-bindkey -M menuselect '^M' .accept-line
+# bindkey -M menuselect '^M' .accept-line
 # Don't auto expand ~ to home folder
 zstyle ':completion:*' expand 'false'
+ZSH_AUTOCOMPLETE_IGNORE_COMPLETIONS_FOR="~"

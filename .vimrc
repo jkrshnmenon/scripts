@@ -7,7 +7,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'wincent/command-t'
 "Plugin 'romainl/Apprentice'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -18,9 +18,9 @@ Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'preservim/nerdtree'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
-"Plugin 'jayli/vim-easycomplete'
 Plugin 'tpope/vim-surround'
 Plugin 'ervandew/supertab'
+Plugin 'github/copilot.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
