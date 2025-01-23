@@ -52,21 +52,31 @@ index 0000000..25a03f1
 +}
 +
 +if has docker; then
-+  da "$@"
++  da "${*:-}"
 +else
 +  "Cannot find docker in $PATH"
 +fi
 diff --git a/bin/fif b/bin/fif
-index 7c5142d..18892f1 100755
+index 7c5142d..9047949 100755
 --- a/bin/fif
 +++ b/bin/fif
-@@ -16,7 +16,8 @@ fif() {
-   fi
+@@ -10,13 +10,14 @@ if [[ -n "$DEBUG" ]]; then
+ fi
+ 
+ fif() {
+-  if [ ! "$#" -gt 0 ]; then
+-    echo "Need a string to search for!";
+-    return 1;
+-  fi
++  # if [ ! "$#" -gt 0 ]; then
++  #   echo "Need a string to search for!";
++  #   return 1;
++  # fi
    # if FZF_PREVIEW_WINDOW is undefined, quoting it breaks the script
    # shellcheck disable=SC2086
 -  rg --files-with-matches --no-messages "$1" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
 +  # rg --files-with-matches --no-messages "$1" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
-+  rg --no-messages "$1" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
++  rg --no-messages "${*:-}" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
  }
  
  [[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'

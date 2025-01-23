@@ -137,6 +137,13 @@ pd_logs () {
 	pd cat $ID $(pd ls $ID)
 }
 
+fzf_cd () {
+	x=$(find . -type d 2> /dev/null | fzf --query="${*:-}" --no-multi --select-1 --exit-0)
+	if [ -d "$x" ]; then
+		cd $x
+	fi
+}
+
 # Pydatatask
 alias pdlogs="pd_logs "
 
@@ -151,8 +158,13 @@ alias drmi="d-image-rm"
 alias dlogs="d-logs"
 
 # File search
-alias frg="fzf-grep-edit "
+## This searches within the directory for matching filenames
 alias fvim="fzf-find-edit"
+## This searches within the files for matching lines (also the filenames)
+alias frg="fzf-grep-edit "
+## This does both
+alias fcode="fzf-vscode"
+alias fcd="fzf_cd "
 
 # Kubernetes
 alias fpods="fzf-browse-pods"
