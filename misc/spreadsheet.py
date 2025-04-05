@@ -1,4 +1,4 @@
-# Follow the steps here to create a service account for bots
+# Follow the steps here to create a OAuth client ID
 # https://docs.gspread.org/en/latest/oauth2.html
 # You'll need to download OAuth client ID to a JSON file somewhere
 # Once you have all that, share the spreadsheet with the email address listed in the JSON file
@@ -6,21 +6,24 @@
 # You client should be ready to rock'n'roll
 #
 
+import os
 import pandas
 import gspread
+from pathlib import Path
 from typing import Callable
 from string import ascii_uppercase
 
+DEFAULT_CREDENTIALS = Path(os.environ["HOME"]) / ".config" / "gspread" / "credentials.json"
 
 class Client():
-    def __init__(self, credentials: str, spreadsheet: str = None):
+    def __init__(self, spreadsheet: str = None, credentials: Path = DEFAULT_CREDENTIALS):
         """This is a helper library for uploading data to Google spreadsheets
 
         Args:
             credentials (str): A path to the credentials JSON file downloaded from Google Cloud Console
             spreadsheet (str, optional): A spreadsheet to open. Defaults to None.
         """
-        self.handle = gspread.service_account(filename=credentials)
+        self.handle = gspread.oauth(credentials_filename=credentials)
         if spreadsheet is not None and len(spreadsheet) > 0:
             self.spreadsheet = self.get_spreadsheet(spreadsheet)
     
@@ -65,11 +68,12 @@ class Client():
         """
         try:
             obj = self.handle.open(spreadsheet)
+            self.spreadsheet = obj
             return obj
         except gspread.SpreadsheetNotFound:
             return None
     
-    def get_worksheet(self, spreadsheet: gspread.Spreadsheet, name: str=None, index: int=None) -> gspread.Worksheet:
+    def get_worksheet(self, spreadsheet: gspread.Spreadsheet = None, name: str=None, index: int=None) -> gspread.Worksheet:
         """Open a specific worksheet in a spreadsheet
 
         Args:
@@ -86,6 +90,10 @@ class Client():
         """
         if name is None and index is None:
             raise Exception("Name and index cannot both be none")
+
+        if spreadsheet is None:
+            assert self.spreadsheet is not None, "Spreadsheet is not set or provided (use get_spreadsheet)"
+            spreadsheet = self.spreadsheet
         
         if name is not None:
             try:
