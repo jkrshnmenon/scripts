@@ -191,3 +191,31 @@ zstyle ':autocomplete:*' insert-separator false
 # Don't auto expand ~ to home folder
 zstyle ':completion:*' expand 'false'
 ZSH_AUTOCOMPLETE_IGNORE_COMPLETIONS_FOR="~"
+
+if [ ! -f $HOME/.zellij-completion.src ]; then
+    zellij setup --generate-completion zsh | sed -E "
+/^autoload -U is-at-least/a\\
+\\
+_zellij_sessions() {\\
+    local line sessions desc; sessions=(\"\${(@f)\$(zellij ls -n)}\")\\
+    local -a session_names_with_desc\\
+    for line in \"\${sessions[@]}\"; do\\
+        session_name=\${line%% *}\\
+        desc=\${line#* }\\
+        session_names_with_desc+=(\"\$session_name:\$desc\")\\
+    done\\
+    _describe -t sessions 'active session' session_names_with_desc\\
+}
+s/^(attach)/\1|a/
+s/::session-name -- Name of the session to attach to:/::session-name:_zellij_sessions/
+s/^(kill-session)/\1|k/
+s/::target-session -- Name of target session:/::target-session:_zellij_sessions/
+s/^(delete-session)/\1|d/
+s/^(_(zellij) ).*/compdef \1\2/
+" > ~/.zellij-completion.src
+fi
+
+. $HOME/.zellij-completion.src
+alias za="zellij attach "
+alias zd="zellij delete-session "
+alias zl="zellij list-sessions"
