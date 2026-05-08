@@ -1,0 +1,34 @@
+image=/home/jay/Pictures/lockscreen.jpg
+indicator-radius=100
+indicator-thickness=15
+
+# Default: transparent
+ring-color=00000000
+inside-color=00000000
+line-color=00000000
+
+# Clear/empty input: orange
+ring-clear-color=fe8019ff
+inside-clear-color=00000000
+line-clear-color=00000000
+
+# Wrong password: red
+ring-wrong-color=cc241dff
+inside-wrong-color=00000000
+line-wrong-color=00000000
+
+# Verifying: orange
+ring-ver-color=fe8019ff
+inside-ver-color=00000000
+line-ver-color=00000000
+
+# No text
+font-size=0
+text-color=00000000
+text-clear-color=00000000
+text-wrong-color=00000000
+text-ver-color=00000000
+text-caps-lock-color=00000000
+
+key-hl-color=fe8019ff
+bs-hl-color=cc241dff
