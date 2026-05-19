@@ -267,7 +267,7 @@ in
       ignoreAllDups = true;
     };
 
-    initExtra = ''
+    initContent = ''
       setopt RM_STAR_SILENT
 
       export DISPLAY=''${DISPLAY:-:0}

@@ -68,8 +68,8 @@ in
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -144,6 +144,7 @@ in
     python3
     python3Packages.pip
     python3Packages.virtualenvwrapper
+    python3Packages.virtualenv
     go
     ghostty
     nerd-fonts.fira-code
@@ -183,6 +184,8 @@ in
     xfce.xfce4-power-manager
     mako
     libnotify
+    ncdu
+    github-cli
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
