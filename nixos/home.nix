@@ -94,6 +94,7 @@ in
           set keyprotocol=
           set nocompatible
           filetype plugin indent on
+          syntax on
 
           " Clipboard
           nnoremap <C-y> "+y
@@ -111,8 +112,6 @@ in
           nnoremap <leader>n :NERDTreeFocus<CR>
           nnoremap <leader>t :NERDTreeToggle<CR>
           nnoremap <leader>f :NERDTreeFind<CR>
-          nnoremap <C-t> :NERDTreeToggle<CR>
-          nnoremap <C-f> :NERDTreeFind<CR>
           autocmd StdinReadPre * let s:std_in=1
           autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
           autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
@@ -194,6 +193,8 @@ in
 
     ".config/ghostty/config".source = ./ghostty/config;
 
+    ".config/mako/config".source = ./mako/config;
+
     ".config/swaylock/config".source = ./swaylock/config;
 
     ".ptpython/config.py".source = ptpythonConfig;
@@ -221,6 +222,7 @@ in
       ll = "ls -l";
       edit = "sudo vim /etc/nixos/configuration.nix";
       update = "sudo nixos-rebuild switch";
+      cleanup = "sudo nix-collect-garbage -d";
 
       # Config shortcuts
       zshconfig = "vim ~/.zshrc";
@@ -269,6 +271,7 @@ in
 
     initContent = ''
       setopt RM_STAR_SILENT
+      stty quit undef
 
       export DISPLAY=''${DISPLAY:-:0}
       export EDITOR='vim'

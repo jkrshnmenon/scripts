@@ -84,6 +84,9 @@ in
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   security.sudo.wheelNeedsPassword = false;
+  security.pam.services.login.enableGnomeKeyring = true;
+
+  services.gnome.gnome-keyring.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -127,6 +130,9 @@ in
 
   # Docker
   virtualisation.docker.enable = true;
+
+  # Firmware updates
+  services.fwupd.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -180,12 +186,17 @@ in
     rbenv
     xclip
     ruff
+    ripgrep
     google-cloud-sdk
     xfce.xfce4-power-manager
     mako
     libnotify
     ncdu
     github-cli
+    unzip
+    lshw
+    dmidecode
+    rsync
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
