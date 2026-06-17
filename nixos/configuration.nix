@@ -119,6 +119,8 @@ in
   programs.niri.enable = true;
   programs.xwayland.enable = true;
 
+  environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+
   programs.git.enable = true;
 
 
@@ -130,6 +132,7 @@ in
 
   # Docker
   virtualisation.docker.enable = true;
+  virtualisation.docker.package = pkgs.docker_29;
 
   # Firmware updates
   services.fwupd.enable = true;
@@ -197,6 +200,9 @@ in
     lshw
     dmidecode
     rsync
+    shellcheck
+    kubectl
+    parallel
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
