@@ -118,6 +118,7 @@ in
   programs.firefox.enable = true;
   programs.niri.enable = true;
   programs.xwayland.enable = true;
+  programs.xfconf.enable = true;
 
   environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "wayland";
 
@@ -191,7 +192,7 @@ in
     ruff
     ripgrep
     google-cloud-sdk
-    xfce.xfce4-power-manager
+    swayidle
     mako
     libnotify
     ncdu

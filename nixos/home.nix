@@ -197,7 +197,7 @@ in
 
     ".config/swaylock/config".source = ./swaylock/config;
 
-    ".ptpython/config.py".source = ptpythonConfig;
+    ".config/ptpython/config.py".source = ptpythonConfig;
 
     ".icons/default/index.theme".text = ''
       [Icon Theme]
