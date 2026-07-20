@@ -159,6 +159,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
+    git-lfs
     claude-code
     fzf
     zsh-fzf-tab
@@ -181,6 +182,7 @@ in
     gcc
     clang
     llvm
+    gnumake
     p7zip
     zip
     python3Packages.ptpython
@@ -208,6 +210,8 @@ in
     swayidle
     mako
     libnotify
+    poweralertd
+    alsa-utils
     ncdu
     github-cli
     unzip
@@ -217,6 +221,8 @@ in
     shellcheck
     kubectl
     parallel
+    jnv
+    file
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
