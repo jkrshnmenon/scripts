@@ -127,6 +127,17 @@ in
 
   programs.zsh.enable = true;
 
+  # Run dynamically-linked generic-Linux binaries.
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+    openssl
+    curl
+    glib
+    libgcc
+  ];
+
   # Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -141,6 +152,8 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   environment.pathsToLink = [ "/lib" ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
