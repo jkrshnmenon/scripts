@@ -252,4 +252,16 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
 
+  # Low-battery desktop notifications via UPower + mako.
+  systemd.user.services.poweralertd = {
+    description = "Power alerter using UPower";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.poweralertd}/bin/poweralertd";
+      Restart = "on-failure";
+    };
+  };
+
 }
