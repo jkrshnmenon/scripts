@@ -66,3 +66,4 @@ keybind = alt+f=toggle_split_zoom
 title = " "
 split-divider-color = "#545b0b"
 unfocused-split-fill = "#000000"
+copy-on-select = clipboard
