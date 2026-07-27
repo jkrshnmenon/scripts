@@ -71,6 +71,9 @@ in
 
   home.packages = with pkgs; [
     lesspipe
+    chafa
+    eza
+    exiftool
     (vim-full.customize {
       name = "vim";
       vimrcConfig = {
