@@ -46,6 +46,9 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # ZeroTier virtual networking.
+  services.zerotierone.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Phoenix";
 
