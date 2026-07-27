@@ -223,6 +223,10 @@ in
     parallel
     jnv
     file
+    jdk21
+    maven
+    procps
+    jq
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

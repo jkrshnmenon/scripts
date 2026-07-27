@@ -67,3 +67,4 @@ title = " "
 split-divider-color = "#545b0b"
 unfocused-split-fill = "#000000"
 copy-on-select = clipboard
+app-notifications = no-clipboard-copy

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   fzf-zsh-plugin = pkgs.stdenvNoCC.mkDerivation {
@@ -70,6 +70,7 @@ in
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
+    lesspipe
     (vim-full.customize {
       name = "vim";
       vimrcConfig = {
@@ -212,6 +213,11 @@ in
     XCURSOR_SIZE = "24";
   };
 
+  home.activation.installSheets = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/.local/bin"
+    CC="${pkgs.stdenv.cc}/bin/cc" GOBIN="$HOME/.local/bin" ${pkgs.go}/bin/go install github.com/maaslalani/sheets@main
+  '';
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -276,6 +282,7 @@ in
       export DISPLAY=''${DISPLAY:-:0}
       export EDITOR='vim'
       export BAT_THEME="Monokai Extended Bright"
+      export LESSOPEN='| lessfilter-fzf %s'
       export IDA_PATH=$HOME/Downloads/idapro-9.0
       export PATH=$PATH:$HOME/.local/bin
 
