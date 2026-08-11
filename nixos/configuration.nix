@@ -183,6 +183,17 @@ in
   # Docker
   virtualisation.docker.enable = true;
   virtualisation.docker.package = pkgs.docker_29;
+  virtualisation.docker.daemon.settings = {
+    insecure-registries = [
+      "suitedocker.shell.phish"
+      "floordocker.shell.phish"
+    ];
+  };
+
+  # Provide /bin/bash for scripts with hardcoded shebangs
+  system.activationScripts.binbash = ''
+    ln -sf ${pkgs.bash}/bin/bash /bin/bash
+  '';
 
   # Firmware updates
   services.fwupd.enable = true;
