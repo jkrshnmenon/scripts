@@ -231,6 +231,7 @@ in
     gcc
     clang
     llvm
+    llvm.dev
     gnumake
     p7zip
     zip
@@ -276,6 +277,11 @@ in
     maven
     procps
     jq
+    net-tools
+    sshuttle
+    tshark
+    gdb
+    tree
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
