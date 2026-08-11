@@ -139,6 +139,41 @@ in
     curl
     glib
     libgcc
+    libglvnd            # libGL, libGLX, libEGL
+    libGL
+    fontconfig
+    freetype
+    dbus
+    xorg.libX11
+    xorg.libXext
+    xorg.libXrender
+    xorg.libXrandr
+    xorg.libXfixes
+    xorg.libXcursor
+    xorg.libXi
+    xorg.libXcomposite
+    xorg.libXdamage
+    xorg.libXtst
+    xorg.libxcb
+    xorg.xcbutil
+    xorg.xcbutilwm
+    xorg.xcbutilimage
+    xorg.xcbutilkeysyms
+    xorg.xcbutilrenderutil
+    xcb-util-cursor
+    libxkbcommon
+    nss
+    nspr
+    alsa-lib
+    cups
+    expat
+    at-spi2-atk
+    at-spi2-core
+    pango
+    cairo
+    gtk3
+    gdk-pixbuf
+    wayland
   ];
 
   # Bluetooth
