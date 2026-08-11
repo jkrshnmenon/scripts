@@ -230,6 +230,7 @@ in
     shellAliases = {
       ll = "ls -l";
       edit = "sudo vim /etc/nixos/configuration.nix";
+      upgrade = "sudo rsync -ravz /home/jay/git_stuff/scripts/nixos/ /etc/nixos/";
       update = "sudo nixos-rebuild switch";
       cleanup = "sudo nix-collect-garbage -d";
 
@@ -262,6 +263,9 @@ in
 
       # Misc
       fkill = "fzf-kill";
+
+      # IDA Pro — force XCB; IDA's bundled Qt6 Wayland plugin crashes on Niri
+      ida = "QT_QPA_PLATFORM=xcb ~/Downloads/idapro-9.3/ida";
     };
 
     # Set before oh-my-zsh is sourced
