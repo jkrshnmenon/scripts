@@ -282,6 +282,7 @@ in
     tshark
     gdb
     tree
+    openssl
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

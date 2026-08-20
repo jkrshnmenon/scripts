@@ -221,6 +221,33 @@ in
     CC="${pkgs.stdenv.cc}/bin/cc" GOBIN="$HOME/.local/bin" ${pkgs.go}/bin/go install github.com/maaslalani/sheets@main
   '';
 
+  home.activation.setupVenvs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    export WORKON_HOME="$HOME/.virtualenvs"
+    export PATH="${pkgs.stdenv.cc}/bin:${pkgs.pkg-config}/bin:$PATH"
+    export CC="${pkgs.stdenv.cc}/bin/cc"
+    mkdir -p "$WORKON_HOME"
+
+    # Portable CPython managed by uv — runs under nix-ld so pip-installed
+    # wheels can find libstdc++ and friends from programs.nix-ld.libraries.
+    ${pkgs.uv}/bin/uv python install 3.13
+    UV_PY="$(${pkgs.uv}/bin/uv python find 3.13)"
+
+    ensure_venv() {
+      local name="$1"; shift
+      local venv="$WORKON_HOME/$name"
+      # Recreate if missing, or if the venv was built from a Nix-store Python
+      # (those can't dlopen wheel libs like libz3.so — see nix-ld caveat).
+      if [ ! -x "$venv/bin/python" ] || "$venv/bin/python" -c 'import sys; sys.exit(0 if sys.base_prefix.startswith("/nix/store") else 1)' 2>/dev/null; then
+        rm -rf "$venv"
+        ${pkgs.uv}/bin/uv venv --python "$UV_PY" "$venv"
+      fi
+      ${pkgs.uv}/bin/uv pip install --python "$venv/bin/python" "$@"
+    }
+
+    ensure_venv pwn ptpython pwntools sefcom_clusterutils tqdm loguru numpy pandas
+    ensure_venv angr ptpython angr
+  '';
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
