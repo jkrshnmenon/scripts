@@ -110,7 +110,7 @@ in
   users.users.jay = {
     isNormalUser = true;
     description = "Jay";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "kvm" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -122,6 +122,19 @@ in
   programs.niri.enable = true;
   programs.xwayland.enable = true;
   programs.xfconf.enable = true;
+
+  # Screen sharing on Niri: route the default portal to GNOME so Discord (and
+  # other Electron/WebRTC apps) can find org.freedesktop.portal.ScreenCast.
+  # See https://github.com/niri-wm/niri/discussions/3223
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gnome
+    ];
+    config.common.default = [ "gnome" ];
+  };
 
   environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "wayland";
 
@@ -219,6 +232,7 @@ in
     python3Packages.virtualenvwrapper
     python3Packages.virtualenv
     go
+    nodejs
     ghostty
     nerd-fonts.fira-code
     font-awesome
@@ -233,6 +247,21 @@ in
     llvm
     llvm.dev
     gnumake
+
+    # Linux kernel development and VM testing.
+    qemu_kvm
+    bc
+    bison
+    flex
+    pkg-config
+    ncurses
+    elfutils
+    pahole
+    perl
+    cpio
+    openssl.dev
+    glibc.static
+
     p7zip
     zip
     python3Packages.ptpython
@@ -277,6 +306,7 @@ in
     maven
     procps
     jq
+    nodejs
     net-tools
     sshuttle
     tshark
