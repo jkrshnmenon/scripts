@@ -289,7 +289,7 @@ in
       drm = "d-rm";
       drmi = "d-image-rm";
       dlogs = "d-logs";
-      lzd = "lazydocker";
+      lsd = "lazydocker";
 
       # File search (fzf-zsh-plugin)
       fvim = "fzf-find-edit";
