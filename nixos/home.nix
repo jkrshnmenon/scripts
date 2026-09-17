@@ -74,6 +74,7 @@ in
     chafa
     eza
     exiftool
+    lazydocker
     (vim-full.customize {
       name = "vim";
       vimrcConfig = {
@@ -221,6 +222,13 @@ in
     CC="${pkgs.stdenv.cc}/bin/cc" GOBIN="$HOME/.local/bin" ${pkgs.go}/bin/go install github.com/maaslalani/sheets@main
   '';
 
+  home.activation.installDoxx = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/.local/bin"
+    export PATH="${pkgs.stdenv.cc}/bin:${pkgs.rustc}/bin:$PATH"
+    export CC="${pkgs.stdenv.cc}/bin/cc"
+    ${pkgs.cargo}/bin/cargo install --git https://github.com/bgreenwell/doxx --locked --root "$HOME/.local"
+  '';
+
   home.activation.setupVenvs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     export WORKON_HOME="$HOME/.virtualenvs"
     export PATH="${pkgs.stdenv.cc}/bin:${pkgs.pkg-config}/bin:$PATH"
@@ -281,6 +289,7 @@ in
       drm = "d-rm";
       drmi = "d-image-rm";
       dlogs = "d-logs";
+      lzd = "lazydocker";
 
       # File search (fzf-zsh-plugin)
       fvim = "fzf-find-edit";
