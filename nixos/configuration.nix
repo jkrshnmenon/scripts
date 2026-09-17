@@ -238,6 +238,7 @@ in
     font-awesome
     roboto
     discord
+    vesktop
     zoom-us
     xwayland-satellite
     btop
