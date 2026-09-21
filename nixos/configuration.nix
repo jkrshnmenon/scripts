@@ -49,6 +49,9 @@ in
   # ZeroTier virtual networking.
   services.zerotierone.enable = true;
 
+  # NetBird virtual networking.
+  services.netbird.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Phoenix";
 
@@ -248,7 +251,6 @@ in
     llvm
     llvm.dev
     gnumake
-
     # Linux kernel development and VM testing.
     qemu_kvm
     bc
@@ -262,7 +264,6 @@ in
     cpio
     openssl.dev
     glibc.static
-
     p7zip
     zip
     python3Packages.ptpython
