@@ -35,6 +35,10 @@ let
       substituteInPlace $out/share/applications/limusic.desktop \
         --replace-fail 'Exec=limusic-app' 'Exec=limusic'
       cp -r ${appimageContents}/usr/share/icons $out/share/
+      chmod -R u+w $out/share/icons
+      for f in $out/share/icons/hicolor/*/apps/limusic-app.png; do
+        ln -s limusic-app.png "$(dirname "$f")/Limusic-app.png"
+      done
     '';
   };
 
