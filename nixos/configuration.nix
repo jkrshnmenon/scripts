@@ -20,6 +20,24 @@ let
     buildInputs = with pkgs; [ gdk-pixbuf atk gtk3 pango cairo ];
   };
 
+  limusic = let
+    pname = "limusic";
+    version = "0.8.1";
+    src = pkgs.fetchurl {
+      url = "https://github.com/SimoHypers/limusic/releases/download/v${version}/limusic_${version}_amd64.AppImage";
+      hash = "sha256-4NyTr9x6+KN7ntww8K+gYOy1Eyumxn9uKUiDKyvj81w=";
+    };
+    appimageContents = pkgs.appimageTools.extractType2 { inherit pname version src; };
+  in pkgs.appimageTools.wrapType2 {
+    inherit pname version src;
+    extraInstallCommands = ''
+      install -Dm444 ${appimageContents}/limusic.desktop $out/share/applications/limusic.desktop
+      substituteInPlace $out/share/applications/limusic.desktop \
+        --replace-fail 'Exec=limusic-app' 'Exec=limusic'
+      cp -r ${appimageContents}/usr/share/icons $out/share/
+    '';
+  };
+
 in
 {
   imports =
@@ -272,6 +290,7 @@ in
     yq-go
     csvlens
     niri-taskbar
+    limusic
     wdisplays
     pavucontrol
     networkmanagerapplet
