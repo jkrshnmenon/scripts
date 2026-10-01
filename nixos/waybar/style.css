@@ -363,3 +363,19 @@ label:focus {
 #privacy-item.audio-out {
     background-color: #0069d4;
 }
+
+#custom-limusic {
+    padding: 0 12px;
+    margin: 0 8px;
+    color: #ffffff;
+    background-color: transparent;
+}
+
+#custom-limusic.paused {
+    color: #a0a0a0;
+}
+
+#custom-limusic.hidden {
+    padding: 0;
+    margin: 0;
+}

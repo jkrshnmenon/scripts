@@ -3,7 +3,7 @@
     "position": "top",
     "height": 30,
     "modules-left": ["niri/workspaces", "cffi/niri-taskbar", "niri/window"],
-    "modules-center": ["clock"],
+    "modules-center": ["clock", "custom/limusic"],
     "modules-right": ["pulseaudio", "cpu", "memory", "battery", "tray", "custom/logout", "custom/power"],
 
     "niri/workspaces": {},
@@ -15,6 +15,16 @@
     },
     "clock": {
         "format": "{:%H:%M  %d/%m/%Y}"
+    },
+    "custom/limusic": {
+        "exec": "~/.config/waybar/scripts/limusic-status.sh",
+        "return-type": "json",
+        "max-length": 60,
+        "on-click": "~/.config/waybar/scripts/limusic-panel-toggle.sh",
+        "on-click-right": "~/.config/waybar/scripts/limusic-focus.sh",
+        "on-click-middle": "playerctl -p limusic play-pause",
+        "on-scroll-up": "playerctl -p limusic next",
+        "on-scroll-down": "playerctl -p limusic previous"
     },
     "cpu": {
         "format": "{usage}% 󰍛",

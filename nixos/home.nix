@@ -195,6 +195,18 @@ in
       source = ./waybar/scripts/power-profile-cycle.sh;
       executable = true;
     };
+    ".config/waybar/scripts/limusic-status.sh" = {
+      source = ./waybar/scripts/limusic-status.sh;
+      executable = true;
+    };
+    ".config/waybar/scripts/limusic-panel-toggle.sh" = {
+      source = ./waybar/scripts/limusic-panel-toggle.sh;
+      executable = true;
+    };
+    ".config/waybar/scripts/limusic-focus.sh" = {
+      source = ./waybar/scripts/limusic-focus.sh;
+      executable = true;
+    };
 
     ".config/ghostty/config".source = ./ghostty/config;
 

@@ -329,6 +329,13 @@ window-rule {
     open-floating true
 }
 
+// Dock the mpris-miniplayer panel floating in the bottom-right corner.
+window-rule {
+    match app-id=r#"^io\.github\.ChrisLauinger\.MprisMiniPlayer$"#
+    open-floating true
+    default-floating-position x=16 y=16 relative-to="bottom-right"
+}
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {

@@ -42,6 +42,24 @@ let
     '';
   };
 
+  mpris-miniplayer = pkgs.stdenv.mkDerivation rec {
+    pname = "mpris-miniplayer";
+    version = "2.2.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "ChrisLauinger77";
+      repo = "mpris-miniplayer";
+      rev = "v${version}";
+      hash = "sha256-3y4B77uiRNBlmpPKOnv/GAuNg3DOxj12m+EG0ZMIUqc=";
+    };
+    nativeBuildInputs = with pkgs; [
+      meson ninja vala pkg-config gettext
+      desktop-file-utils appstream glib
+      dbus  # provides dbus-run-session (used by meson tests)
+      wrapGAppsHook4
+    ];
+    buildInputs = with pkgs; [ gtk4 libadwaita libsoup_3 ];
+  };
+
 in
 {
   imports =
@@ -295,6 +313,8 @@ in
     csvlens
     niri-taskbar
     limusic
+    mpris-miniplayer
+    playerctl
     wdisplays
     pavucontrol
     networkmanagerapplet
