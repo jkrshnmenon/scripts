@@ -53,11 +53,11 @@ let
     };
     nativeBuildInputs = with pkgs; [
       meson ninja vala pkg-config gettext
-      desktop-file-utils appstream glib
+      desktop-file-utils appstream
       dbus  # provides dbus-run-session (used by meson tests)
       wrapGAppsHook4
     ];
-    buildInputs = with pkgs; [ gtk4 libadwaita libsoup_3 ];
+    buildInputs = with pkgs; [ glib gtk4 libadwaita libsoup_3 ];
   };
 
 in
@@ -358,6 +358,7 @@ in
     gdb
     tree
     openssl
+    ninja
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -398,5 +399,50 @@ in
       Restart = "on-failure";
     };
   };
+
+  # Auto power-profile: performance when charging or >80%, power-saver when <30%,
+  # balanced otherwise. Polled every 30s and also triggered on AC plug/unplug.
+  systemd.services.auto-power-profile = {
+    description = "Switch power-profiles-daemon profile based on battery state";
+    after = [ "power-profiles-daemon.service" ];
+    wants = [ "power-profiles-daemon.service" ];
+    serviceConfig.Type = "oneshot";
+    path = [ pkgs.power-profiles-daemon pkgs.coreutils ];
+    script = ''
+      bat=/sys/class/power_supply/BAT1
+      [ -r "$bat/capacity" ] || exit 0
+      pct=$(cat "$bat/capacity")
+      status=$(cat "$bat/status")
+
+      if [ "$status" = "Charging" ] || [ "$status" = "Full" ] || [ "$pct" -gt 80 ]; then
+        target=performance
+      elif [ "$pct" -lt 30 ]; then
+        target=power-saver
+      else
+        target=balanced
+      fi
+
+      current=$(powerprofilesctl get)
+      if [ "$current" != "$target" ]; then
+        powerprofilesctl set "$target"
+      fi
+    '';
+  };
+
+  systemd.timers.auto-power-profile = {
+    description = "Periodic auto-power-profile check";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "30s";
+      OnUnitActiveSec = "30s";
+      AccuracySec = "5s";
+      Unit = "auto-power-profile.service";
+    };
+  };
+
+  # React immediately to AC plug/unplug instead of waiting for the next poll.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="power_supply", KERNEL=="ACAD", RUN+="${pkgs.systemd}/bin/systemctl --no-block start auto-power-profile.service"
+  '';
 
 }

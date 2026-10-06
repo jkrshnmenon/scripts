@@ -93,6 +93,7 @@ in
             supertab
             copilot-vim
             vim-lsp
+            fzf-vim
           ];
         };
         customRC = ''
@@ -123,6 +124,11 @@ in
             \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
           autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
           autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+          " fzf
+          nnoremap <leader>p :Files<CR>
+          nnoremap <leader>b :Buffers<CR>
+          nnoremap <leader>g :Rg<CR>
 
           " LaTeX live preview
           let g:livepreview_engine = 'xelatex'
