@@ -265,7 +265,6 @@ in
   environment.systemPackages = with pkgs; [
     wget
     git-lfs
-    claude-code
     fzf
     zsh-fzf-tab
     cargo
