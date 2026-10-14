@@ -379,6 +379,11 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # Allow traffic from Docker/Podman bridge interfaces.
+  networking.firewall.extraCommands = ''
+    iptables -I nixos-fw 1 -i br-+ -j nixos-fw-accept
+  '';
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
