@@ -90,7 +90,7 @@ in
   services.zerotierone.enable = true;
 
   # NetBird virtual networking.
-  services.netbird.enable = true;
+  # services.netbird.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Phoenix";
