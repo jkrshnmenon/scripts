@@ -359,6 +359,10 @@ in
     openssl
     ninja
     pkgs.netbird-ui
+    cmake
+    nghttp2.dev
+    openssl
+    pkg-config
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
