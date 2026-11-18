@@ -22,10 +22,10 @@ let
 
   limusic = let
     pname = "limusic";
-    version = "0.8.2";
+    version = "1.4.0";
     src = pkgs.fetchurl {
       url = "https://github.com/SimoHypers/limusic/releases/download/v${version}/limusic_${version}_amd64.AppImage";
-      hash = "sha256-B0nXajXOkVvR32s2q6tvlXDVIyHUCUlntsAxTj5MPZ4=";
+      hash = "sha256-ElOA5HOMRNb71aUvo8AWFfzt5NzLrnSUfxhdhG5lk0A=";
     };
     appimageContents = pkgs.appimageTools.extractType2 { inherit pname version src; };
   in pkgs.appimageTools.wrapType2 {
