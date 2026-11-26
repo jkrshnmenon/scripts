@@ -92,6 +92,9 @@ in
   # NetBird virtual networking.
   services.netbird.enable = true;
 
+  # pcscd for yubikey-manager and other smartcard support.
+  services.pcscd.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Phoenix";
 
@@ -131,6 +134,39 @@ in
   security.rtkit.enable = true;
   security.sudo.wheelNeedsPassword = false;
   security.pam.services.login.enableGnomeKeyring = true;
+
+  # Password policy: enforce password quality when changing passwords via passwd.
+  # Min 12 chars, at least 1 upper, 1 lower, 1 digit, 1 symbol; not based on username.
+  security.pam.services.passwd.rules.password.pwquality = {
+    control = "requisite";
+    modulePath = "${pkgs.libpwquality.lib}/lib/security/pam_pwquality.so";
+    order = config.security.pam.services.passwd.rules.password.unix.order - 10;
+    settings = {
+      retry = 3;
+      minlen = 12;
+      ucredit = -1;
+      lcredit = -1;
+      dcredit = -1;
+      ocredit = -1;
+      difok = 4;
+      usercheck = 1;
+      enforce_for_root = true;
+    };
+  };
+
+  # Password aging defaults for accounts (existing users: apply with `chage`).
+  security.loginDefs.settings = {
+    PASS_MAX_DAYS = 90;
+    PASS_MIN_DAYS = 1;
+    PASS_WARN_AGE = 14;
+  };
+
+  # Anti-virus: ClamAV daemon, signature updater, and a daily scheduled scan.
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+    scanner.enable = true;
+  };
 
   services.gnome.gnome-keyring.enable = true;
   services.pipewire = {
@@ -363,6 +399,11 @@ in
     nghttp2.dev
     openssl
     pkg-config
+    ipset
+    tmux
+    usbutils
+    libfido2
+    yubikey-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -406,6 +447,26 @@ in
     serviceConfig = {
       ExecStart = "${pkgs.poweralertd}/bin/poweralertd";
       Restart = "on-failure";
+    };
+  };
+
+  # Secureframe agent (Fleet orbit + osquery), unpacked from secureframe-agent.deb.
+  # Binaries live statefully in /opt/orbit (orbit self-updates there); config and
+  # enroll secret are in /etc/default/orbit. osqueryd runs via nix-ld.
+  systemd.services.orbit = {
+    description = "Orbit osquery (Secureframe/Fleet agent)";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    startLimitIntervalSec = 0;
+    serviceConfig = {
+      EnvironmentFile = "/etc/default/orbit";
+      ExecStart = "/opt/orbit/bin/orbit/orbit -- --host_identifier specified --specified_identifier 305989e4-2084-4e0e-a799-140660218d44:1aeedc35-686b-4562-a4c0-282bba77687f:f3962b8e-d86e-4d59-b9df-96bdabf1f75f";
+      Restart = "always";
+      RestartSec = 1;
+      KillMode = "control-group";
+      TimeoutStartSec = 0;
+      CPUQuota = "20%";
     };
   };
 
