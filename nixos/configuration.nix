@@ -75,6 +75,7 @@ in
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/b2c5176e-ea57-4f6a-9c35-1f728fdacff5";
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
